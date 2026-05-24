@@ -61,7 +61,7 @@ export const CONFIRMATION_MODELS = ['In-Out Candle', 'Engulfing', 'Pin Bar', 'BO
 // ── MANAGEMENT ──────────────────────────────────
 export const MANAGEMENT_OPTIONS = {
   partial: ['None', '50% at 1R', '50% at 2R', '33/33/33', 'Runner with BE'],
-  trailing: ['None', 'Manual', 'Structure-Based', 'ATR Trail'],
+  trailingStop: ['None', 'Manual', 'Structure-Based', 'ATR Trail'],
   breakeven: ['Not Used', 'At 1R', 'At Entry +5pts', 'After Partial'],
 }
 
