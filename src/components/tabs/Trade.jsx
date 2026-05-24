@@ -332,8 +332,8 @@ export default function Trade({ refresh }) {
               </div>
 
               {/* Multi-TF Alignment */}
-              <div style={{ border: '1px solid var(--c-border)', borderRadius: '0.5rem', padding: '0.75rem' }} className="space-y-2">
-                <div className="text-[9px] font-mono font-semibold uppercase tracking-widest" style={{ color: 'var(--c-accent)' }}>Timeframe Alignment</div>
+              <div className="border border-border rounded-lg p-3 space-y-2">
+                <div className="text-[9px] font-mono font-semibold uppercase tracking-widest text-accent">Timeframe Alignment</div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <div><label className="label">HTF Bias</label>
                     <select className="input" value={form.htf} onChange={e => set('htf', e.target.value)}>
@@ -367,19 +367,16 @@ export default function Trade({ refresh }) {
               </div>
 
               {/* SMC Confluence Toggles */}
-              <div style={{ border: '1px solid var(--c-border)', borderRadius: '0.5rem', padding: '0.75rem' }} className="space-y-2">
-                <div className="text-[9px] font-mono font-semibold uppercase tracking-widest" style={{ color: 'var(--c-accent)' }}>SMC Confluence</div>
+              <div className="border border-border rounded-lg p-3 space-y-2">
+                <div className="text-[9px] font-mono font-semibold uppercase tracking-widest text-accent">SMC Confluence</div>
                 <div className="flex flex-wrap gap-1.5">
                   {SMC_TOGGLES.map(({ id, label }) => {
                     const active = !!form[id]
                     return (
                       <button key={id} onClick={() => set(id, !form[id])}
-                        className="px-2.5 py-1 rounded-md text-[10px] font-medium transition-colors"
-                        style={{
-                          background: active ? 'color-mix(in srgb, var(--c-emerald) 12%, transparent)' : 'transparent',
-                          color: active ? 'var(--c-emerald)' : 'var(--c-ink5)',
-                          border: `1px solid ${active ? 'color-mix(in srgb, var(--c-emerald) 25%, transparent)' : 'var(--c-border)'}`,
-                        }}>{label}</button>
+                        className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-colors ${
+                          active ? 'bg-emerald/12 text-emerald border border-emerald/25' : 'text-ink-5 border border-border hover:border-border-3'
+                        }`}>{label}</button>
                     )
                   })}
                 </div>
