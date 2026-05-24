@@ -13,14 +13,9 @@ import Track from './components/tabs/Track'
 import Log from './components/tabs/Log'
 import Psychology from './components/tabs/Psychology'
 import { supabase } from './lib/supabase'
+import { needsSeed, runSeed } from './lib/seed'
 
-// Safe seed — won't crash if seed data is bad
-try {
-  const { needsSeed, runSeed } = await import('./lib/seed')
-  if (needsSeed()) runSeed()
-} catch (e) {
-  console.error('[HiddenOS] Seed error:', e)
-}
+try { if (needsSeed()) runSeed() } catch(e) { console.error('Seed:', e) }
 
 export default function App() {
   const { user, loading } = useAuth()
@@ -29,10 +24,10 @@ export default function App() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#111827', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#0d0d0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 18, fontWeight: 600, color: '#B89B72' }}>HiddenOS</div>
-          <div style={{ fontSize: 10, color: '#6B7280', marginTop: 4 }}>Loading...</div>
+          <div style={{ fontSize: 18, fontWeight: 600 }}><span style={{ color: '#26a69a' }}>Hidden</span><span style={{ color: '#555' }}>OS</span></div>
+          <div style={{ fontSize: 10, color: '#555', marginTop: 4 }}>Loading...</div>
         </div>
       </div>
     )
@@ -47,8 +42,8 @@ function AppShell({ user }) {
 
   if (!ready) {
     return (
-      <div style={{ minHeight: '100vh', background: '#111827', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontSize: 10, color: '#6B7280' }}>Loading data...</div>
+      <div style={{ minHeight: '100vh', background: '#0d0d0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontSize: 10, color: '#555' }}>Loading data...</div>
       </div>
     )
   }

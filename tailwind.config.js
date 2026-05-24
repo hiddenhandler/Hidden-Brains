@@ -4,35 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg:      { DEFAULT: '#111827', 2: '#1a2233', 3: '#1F2937', 4: '#273449' },
-        surface: { DEFAULT: '#1F2937', 2: '#273449', 3: '#2d3a4f', hover: '#313d52' },
-        border:  { DEFAULT: '#2d3a4f', 2: '#374357', 3: '#435064', active: '#526075' },
-        ink:     { DEFAULT: '#F3F4F6', 2: '#E5E7EB', 3: '#9CA3AF', 4: '#6B7280', 5: '#4B5563' },
-        // Trading colors — muted, professional
-        emerald: { DEFAULT: '#3FA66B', dim: '#3FA66B12', mid: '#3FA66B25' },
-        red:     { DEFAULT: '#C65B5B', dim: '#C65B5B12', mid: '#C65B5B25' },
-        amber:   { DEFAULT: '#B89B72', dim: '#B89B7212', mid: '#B89B7225' },
-        steel:   { DEFAULT: '#5B7FA3', dim: '#5B7FA312', mid: '#5B7FA325' },
-        warn:    { DEFAULT: '#C89B3C' },
-        // Accent — sand gold, used sparingly
-        accent:  { DEFAULT: '#B89B72' },
+        bg:      { DEFAULT: '#0d0d0d', 2: '#111111', 3: '#171717', 4: '#1e1e1e' },
+        surface: { DEFAULT: '#141414', 2: '#1a1a1a', 3: '#222222', hover: '#252525' },
+        border:  { DEFAULT: '#222222', 2: '#2a2a2a', 3: '#333333', active: '#444444' },
+        ink:     { DEFAULT: '#e8e8e8', 2: '#cccccc', 3: '#888888', 4: '#666666', 5: '#444444' },
+        emerald: { DEFAULT: '#26a69a' },
+        red:     { DEFAULT: '#ef5350' },
+        amber:   { DEFAULT: '#b89b72' },
+        accent:  { DEFAULT: '#26a69a' },
+        steel:   { DEFAULT: '#5b7fa3' },
+        warn:    { DEFAULT: '#c89b3c' },
       },
       fontFamily: {
-        sans:    ['Inter', '-apple-system', 'system-ui', 'sans-serif'],
-        mono:    ['"IBM Plex Mono"', '"SF Mono"', 'monospace'],
-        display: ['Inter', 'system-ui', 'sans-serif'],
+        sans:  ['Inter', '-apple-system', 'system-ui', 'sans-serif'],
+        mono:  ['"IBM Plex Mono"', '"SF Mono"', 'monospace'],
       },
       boxShadow: {
-        card: '0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.15)',
-      },
-      animation: {
-        'fade-up': 'fadeUp 0.15s ease-out',
-      },
-      keyframes: {
-        fadeUp: {
-          from: { opacity: '0', transform: 'translateY(3px)' },
-          to:   { opacity: '1', transform: 'translateY(0)' },
-        },
+        card: '0 1px 3px rgba(0,0,0,0.5)',
       },
     },
   },

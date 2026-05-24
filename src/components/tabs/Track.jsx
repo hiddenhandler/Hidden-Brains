@@ -25,7 +25,7 @@ function ScoreRing({ value, label, color }) {
   return (
     <div className="flex flex-col items-center gap-1">
       <svg width="76" height="76" viewBox="0 0 76 76">
-        <circle cx="38" cy="38" r={r} fill="none" stroke="#2d3a4f" strokeWidth="5" />
+        <circle cx="38" cy="38" r={r} fill="none" stroke="#222222" strokeWidth="5" />
         <circle cx="38" cy="38" r={r} fill="none" stroke={color} strokeWidth="5"
           strokeDasharray={c} strokeDashoffset={c * (1 - pct)}
           strokeLinecap="round" transform="rotate(-90 38 38)"
@@ -152,9 +152,9 @@ function Overview() {
         <CardHeader title="Performance Scores" />
         <CardBody>
           <div className="flex justify-around">
-            <ScoreRing value={execScore} label="Exec Score" color="#B89B72" />
-            <ScoreRing value={ruleScore} label="Rule Adh." color="#5B7FA3" />
-            <ScoreRing value={emoScore} label="Emo Stability" color="#3FA66B" />
+            <ScoreRing value={execScore} label="Exec Score" color="#b89b72" />
+            <ScoreRing value={ruleScore} label="Rule Adh." color="#5b7fa3" />
+            <ScoreRing value={emoScore} label="Emo Stability" color="#26a69a" />
           </div>
         </CardBody>
       </Card>
@@ -201,7 +201,7 @@ function Overview() {
             <Bar data={{
               labels: hourLabels.map(h => `${h}:00`),
               datasets: [{ data: hourLabels.map(h => byHour[h] || 0),
-                backgroundColor: hourLabels.map(h => (byHour[h] || 0) >= 0 ? '#3FA66B80' : '#C65B5B80'), borderRadius: 3 }]
+                backgroundColor: hourLabels.map(h => (byHour[h] || 0) >= 0 ? '#26a69a80' : '#ef535080'), borderRadius: 3 }]
             }} options={{ ...CHART_OPTS, maintainAspectRatio: false }} />
           </div>
         </CardBody>
@@ -217,7 +217,7 @@ function Overview() {
                 labels: equity.map((_, i) => i),
                 datasets: [{
                   data: equity,
-                  borderColor: stats.totalPnl >= 0 ? '#3FA66B' : '#C65B5B',
+                  borderColor: stats.totalPnl >= 0 ? '#26a69a' : '#ef5350',
                   backgroundColor: stats.totalPnl >= 0 ? 'rgba(38,166,154,0.08)' : 'rgba(239,83,80,0.08)',
                   borderWidth: 1.5, fill: true, tension: 0.3, pointRadius: 0
                 }]
