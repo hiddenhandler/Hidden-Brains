@@ -25,7 +25,7 @@ function ScoreRing({ value, label, color }) {
   return (
     <div className="flex flex-col items-center gap-1">
       <svg width="76" height="76" viewBox="0 0 76 76">
-        <circle cx="38" cy="38" r={r} fill="none" stroke="#2a2e3e" strokeWidth="5" />
+        <circle cx="38" cy="38" r={r} fill="none" stroke="#222222" strokeWidth="5" />
         <circle cx="38" cy="38" r={r} fill="none" stroke={color} strokeWidth="5"
           strokeDasharray={c} strokeDashoffset={c * (1 - pct)}
           strokeLinecap="round" transform="rotate(-90 38 38)"
@@ -117,8 +117,8 @@ function Overview() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <StatCard label="Z-Score" value={stats.zScore.toFixed(1)} accent={Math.abs(stats.zScore) < 2 ? 'cyan' : 'amber'} sub={Math.abs(stats.zScore) < 1.5 ? 'neutral' : 'streaky'} />
         <StatCard label="Sharpe" value={stats.sharpe.toFixed(2)} accent="cyan" />
-        <StatCard label="Sortino" value={stats.sortino.toFixed(2)} accent="purple" />
-        <StatCard label="Kelly %" value={`${(stats.kelly * 100).toFixed(1)}%`} accent={stats.kelly > 0 ? 'green' : 'red'} sub="optimal size" />
+        <StatCard label="Best Day" value={fmtPnl(stats.bestDay)} accent="green" />
+        <StatCard label="Worst Day" value={fmtPnl(stats.worstDay)} accent="red" />
       </div>
 
       {/* Risk Exposure */}
@@ -152,8 +152,8 @@ function Overview() {
         <CardHeader title="Performance Scores" />
         <CardBody>
           <div className="flex justify-around">
-            <ScoreRing value={execScore} label="Exec Score" color="#ab47bc" />
-            <ScoreRing value={ruleScore} label="Rule Adh." color="#2962ff" />
+            <ScoreRing value={execScore} label="Exec Score" color="#b89b72" />
+            <ScoreRing value={ruleScore} label="Rule Adh." color="#5b7fa3" />
             <ScoreRing value={emoScore} label="Emo Stability" color="#26a69a" />
           </div>
         </CardBody>

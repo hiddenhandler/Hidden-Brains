@@ -363,6 +363,14 @@ export const getFilteredTrades = async () => {
 // ADVANCED STATS (pure function, no DB)
 // ═══════════════════════════════════════════════
 export const calcStats = (trades) => {
+  const EMPTY = {
+    closed: [], open: [], wins: [], losses: [], be: [], totalPnl: 0, grossWin: 0, grossLoss: 0,
+    pf: 0, wr: 0, avgWin: 0, avgLoss: 0, avgRR: 0, expectancy: 0,
+    maxConsecWins: 0, maxConsecLosses: 0, maxDD: 0, currentDD: 0, equity: [0],
+    zScore: 0, sharpe: 0, payoff: 0, recovery: 0, avgHoldMin: 0, ror: null,
+    bestDay: 0, worstDay: 0, greenDays: 0, redDays: 0, avgDayPnl: 0,
+  }
+  if (!trades || !trades.length) return EMPTY
   const closed = trades.filter(t => t.status === 'closed')
   const open = trades.filter(t => t.status === 'open')
   const wins = closed.filter(t => t.outcome === 'win')
@@ -409,15 +417,15 @@ export const calcStats = (trades) => {
 
   const n = closed.length
   const w = wins.length, l = losses.length
-  let runs = 0
-  if (n > 1) { runs = 1; for (let i = 1; i < n; i++) { if (closed[i].outcome !== closed[i - 1].outcome) runs++ } }
+  // Streak tracking (for consec W/L, not for Z-Score)
+  // Z-Score: how far current performance is from mean (in std devs)
+  // Uses daily P&L distribution — positive = above average, negative = below
   let zScore = 0
-  if (n > 1 && w > 0 && l > 0) {
-    const denom = (2 * w * l * (2 * w * l - n)) / (n * n - n)
-    if (denom > 0) {
-      zScore = (n * (runs - 0.5) - 2 * w * l) / Math.sqrt(denom)
-      zScore = Math.max(-10, Math.min(10, zScore))
-    }
+  if (drArr.length > 2) {
+    const lastWeek = drArr.slice(-5)
+    const recentMean = lastWeek.reduce((s, r) => s + r, 0) / lastWeek.length
+    zScore = drStd > 0 ? (recentMean - drMean) / drStd : 0
+    zScore = Math.max(-3, Math.min(3, zScore))
   }
 
   const dailyReturns = {}
@@ -427,22 +435,23 @@ export const calcStats = (trades) => {
   const drStd = drArr.length > 1 ? Math.sqrt(drArr.reduce((s, r) => s + (r - drMean) ** 2, 0) / (drArr.length - 1)) : 0
   const sharpe = drStd > 0 ? (drMean / drStd) * Math.sqrt(252) : 0
 
-  const downside = drArr.filter(r => r < 0)
-  const dsStd = downside.length > 1 ? Math.sqrt(downside.reduce((s, r) => s + r ** 2, 0) / downside.length) : 0
-  const sortino = dsStd > 0 ? (drMean / dsStd) * Math.sqrt(252) : 0
 
-  const kelly = avgLoss > 0 ? wrDec - ((1 - wrDec) / (avgWin / avgLoss)) : 0
   const payoff = avgLoss > 0 ? avgWin / avgLoss : Infinity
   const recovery = maxDD > 0 ? totalPnl / maxDD : 0
 
   const holdTimes = closed.filter(t => t.ts && t.closedAt).map(t => (new Date(t.closedAt) - new Date(t.ts)) / (1000 * 60)).filter(m => m > 0 && m < 60 * 24)
   const avgHoldMin = holdTimes.length ? holdTimes.reduce((s, m) => s + m, 0) / holdTimes.length : 0
-  const ror = n > 10 && avgLoss > 0 ? Math.pow((1 - wrDec) / wrDec, 20) : null
+
 
   return {
     closed, open, wins, losses, be, totalPnl, grossWin, grossLoss,
     pf, wr, avgWin, avgLoss, avgRR, expectancy,
     maxConsecWins, maxConsecLosses, maxDD, currentDD, equity,
-    zScore, sharpe, sortino, kelly, payoff, recovery, avgHoldMin, ror,
+    zScore, sharpe, payoff, recovery, avgHoldMin, ror,
+    bestDay: drArr.length ? Math.max(...drArr) : 0,
+    worstDay: drArr.length ? Math.min(...drArr) : 0,
+    greenDays: drArr.filter(r => r > 0).length,
+    redDays: drArr.filter(r => r <= 0).length,
+    avgDayPnl: drMean,
   }
 }
