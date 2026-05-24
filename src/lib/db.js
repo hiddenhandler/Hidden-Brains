@@ -417,15 +417,15 @@ export const calcStats = (trades) => {
 
   const n = closed.length
   const w = wins.length, l = losses.length
-  let runs = 0
-  if (n > 1) { runs = 1; for (let i = 1; i < n; i++) { if (closed[i].outcome !== closed[i - 1].outcome) runs++ } }
+  // Streak tracking (for consec W/L, not for Z-Score)
+  // Z-Score: how far current performance is from mean (in std devs)
+  // Uses daily P&L distribution — positive = above average, negative = below
   let zScore = 0
-  if (n > 1 && w > 0 && l > 0) {
-    const denom = (2 * w * l * (2 * w * l - n)) / (n * n - n)
-    if (denom > 0) {
-      zScore = (n * (runs - 0.5) - 2 * w * l) / Math.sqrt(denom)
-      zScore = Math.max(-10, Math.min(10, zScore))
-    }
+  if (drArr.length > 2) {
+    const lastWeek = drArr.slice(-5)
+    const recentMean = lastWeek.reduce((s, r) => s + r, 0) / lastWeek.length
+    zScore = drStd > 0 ? (recentMean - drMean) / drStd : 0
+    zScore = Math.max(-3, Math.min(3, zScore))
   }
 
   const dailyReturns = {}
