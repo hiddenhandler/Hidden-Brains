@@ -13,9 +13,14 @@ import Track from './components/tabs/Track'
 import Log from './components/tabs/Log'
 import Psychology from './components/tabs/Psychology'
 import { supabase } from './lib/supabase'
-import { needsSeed, runSeed } from './lib/seed'
 
-if (needsSeed()) runSeed()
+// Safe seed — won't crash if seed data is bad
+try {
+  const { needsSeed, runSeed } = await import('./lib/seed')
+  if (needsSeed()) runSeed()
+} catch (e) {
+  console.error('[HiddenOS] Seed error:', e)
+}
 
 export default function App() {
   const { user, loading } = useAuth()
@@ -24,12 +29,10 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center">
-        <div className="text-center">
-          <div className="font-display text-lg font-bold tracking-wide mb-1">
-            <span className="text-amber">Hidden</span><span className="text-ink-4">OS</span>
-          </div>
-          <div className="text-[10px] text-ink-5 font-mono">Loading...</div>
+      <div style={{ minHeight: '100vh', background: '#111827', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 18, fontWeight: 600, color: '#B89B72' }}>HiddenOS</div>
+          <div style={{ fontSize: 10, color: '#6B7280', marginTop: 4 }}>Loading...</div>
         </div>
       </div>
     )
@@ -44,8 +47,8 @@ function AppShell({ user }) {
 
   if (!ready) {
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center">
-        <div className="text-[10px] text-ink-5 font-mono">Loading data...</div>
+      <div style={{ minHeight: '100vh', background: '#111827', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontSize: 10, color: '#6B7280' }}>Loading data...</div>
       </div>
     )
   }
