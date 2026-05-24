@@ -443,6 +443,11 @@ export const calcStats = (trades) => {
     closed, open, wins, losses, be, totalPnl, grossWin, grossLoss,
     pf, wr, avgWin, avgLoss, avgRR, expectancy,
     maxConsecWins, maxConsecLosses, maxDD, currentDD, equity,
-    zScore, sharpe, sortino, kelly, payoff, recovery, avgHoldMin, ror,
+    zScore, sharpe, payoff, recovery, avgHoldMin, ror,
+    bestDay: drArr.length ? Math.max(...drArr) : 0,
+    worstDay: drArr.length ? Math.min(...drArr) : 0,
+    greenDays: drArr.filter(r => r > 0).length,
+    redDays: drArr.filter(r => r <= 0).length,
+    avgDayPnl: drMean,
   }
 }
