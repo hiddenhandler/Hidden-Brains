@@ -92,8 +92,8 @@ export default function Dashboard({ refresh }) {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <StatCard label="Avg Win" value={`+$${stats.avgWin.toFixed(0)}`} accent="green" />
         <StatCard label="Avg Loss" value={`-$${stats.avgLoss.toFixed(0)}`} accent="red" />
-        <StatCard label="Sortino" value={stats.sortino.toFixed(2)} accent="cyan" />
-        <StatCard label="Kelly %" value={`${(stats.kelly * 100).toFixed(1)}%`} accent={stats.kelly > 0 ? 'green' : 'red'} />
+        <StatCard label="Green Days" value={stats.greenDays} accent="green" />
+        <StatCard label="Red Days" value={stats.redDays} accent="red" />
       </div>
 
       {/* Session Plan + Checklist */}

@@ -363,6 +363,14 @@ export const getFilteredTrades = async () => {
 // ADVANCED STATS (pure function, no DB)
 // ═══════════════════════════════════════════════
 export const calcStats = (trades) => {
+  const EMPTY = {
+    closed: [], open: [], wins: [], losses: [], be: [], totalPnl: 0, grossWin: 0, grossLoss: 0,
+    pf: 0, wr: 0, avgWin: 0, avgLoss: 0, avgRR: 0, expectancy: 0,
+    maxConsecWins: 0, maxConsecLosses: 0, maxDD: 0, currentDD: 0, equity: [0],
+    zScore: 0, sharpe: 0, payoff: 0, recovery: 0, avgHoldMin: 0, ror: null,
+    bestDay: 0, worstDay: 0, greenDays: 0, redDays: 0, avgDayPnl: 0,
+  }
+  if (!trades || !trades.length) return EMPTY
   const closed = trades.filter(t => t.status === 'closed')
   const open = trades.filter(t => t.status === 'open')
   const wins = closed.filter(t => t.outcome === 'win')
