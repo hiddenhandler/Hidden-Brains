@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,80 +6,32 @@
 
 @layer base {
   * { -webkit-tap-highlight-color: transparent; }
-  html { background: #131722; color-scheme: dark; }
-  body {
-    background-color: #131722;
-    color: #d1d4dc;
-    -webkit-font-smoothing: antialiased;
-  }
-  ::-webkit-scrollbar { width: 3px; height: 3px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #333848; border-radius: 2px; }
-  input, select, textarea { -webkit-appearance: none; appearance: none; }
-  ::selection { background: rgba(41,98,255,0.25); color: #d1d4dc; }
+  html { background: #0d0d0d; color-scheme: dark; }
+  body { background: #0d0d0d; color: #e8e8e8; -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 }
 
 @layer components {
-  .card {
-    @apply bg-surface border border-border rounded-lg;
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded
-           bg-cyan/10 border border-cyan/25 text-cyan text-[11px] font-mono font-medium uppercase tracking-wider
-           transition-all hover:bg-cyan/20 hover:border-cyan/40 active:scale-[0.98];
-  }
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded
-           border border-border-2 text-ink-3 text-[11px] font-mono font-medium uppercase tracking-wider
-           transition-all hover:border-border-3 hover:text-ink-2 bg-transparent;
-  }
-  .btn-accent {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded
-           bg-emerald/10 border border-emerald/25 text-emerald text-[11px] font-mono font-medium uppercase tracking-wider
-           transition-all hover:bg-emerald/20 active:scale-[0.98];
-  }
-  .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded
-           bg-red/10 border border-red/25 text-red text-[11px] font-mono font-medium uppercase tracking-wider
-           transition-all hover:bg-red/20 active:scale-[0.98];
-  }
-
-  .input {
-    @apply w-full bg-bg-3 border border-border rounded px-3 py-2
-           text-sm text-ink font-sans outline-none placeholder:text-ink-5
-           focus:border-cyan/30 focus:ring-1 focus:ring-cyan/10 transition-colors;
-  }
-  .label {
-    @apply block text-[10px] font-mono font-medium uppercase tracking-wider text-ink-4 mb-1;
-  }
-
-  .section-title {
-    @apply flex items-center gap-3 my-4;
-  }
-  .section-title::before,
-  .section-title::after {
-    content: '';
-    @apply flex-1 h-px bg-border;
-  }
-  .section-title span {
-    @apply text-[10px] font-mono font-medium uppercase tracking-wider text-ink-4 whitespace-nowrap;
-  }
-
-  .badge {
-    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-medium uppercase tracking-wider;
-  }
-  .badge-cyan   { @apply bg-cyan/10 text-cyan; }
-  .badge-green  { @apply bg-emerald/10 text-emerald; }
-  .badge-red    { @apply bg-red/10 text-red; }
-  .badge-amber  { @apply bg-amber/10 text-amber; }
-  .badge-purple { @apply bg-purple/10 text-purple; }
-  .badge-gray   { @apply bg-surface-2 text-ink-4; }
-
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .card { @apply bg-surface border border-border rounded-lg shadow-card; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-accent/10 border border-accent/20 text-accent text-[11px] font-mono font-medium tracking-wide transition-all active:scale-[0.98]; }
+  .btn-primary:hover { @apply bg-accent/15; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-border-2 text-ink-4 text-[11px] font-mono font-medium tracking-wide transition-all hover:text-ink-3; }
+  .input { @apply w-full bg-bg-3 border border-border rounded-md px-3 py-2 text-sm text-ink outline-none placeholder:text-ink-5 focus:border-accent/30 transition-colors; font-family: 'Inter', system-ui, sans-serif; }
+  .label { @apply block text-[10px] font-medium tracking-wide text-ink-4 mb-1 uppercase; }
+  .section-title { @apply flex items-center gap-3 my-4; }
+  .section-title::before, .section-title::after { content: ''; @apply flex-1 h-px bg-border; }
+  .section-title span { @apply text-[10px] font-mono font-medium tracking-wide text-ink-5 whitespace-nowrap; }
+  .badge { @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-medium tracking-wide; }
+  .badge-green { @apply bg-emerald/10 text-emerald; }
+  .badge-red { @apply bg-red/10 text-red; }
+  .badge-amber { @apply bg-amber/10 text-amber; }
+  .badge-cyan { @apply bg-steel/10 text-steel; }
+  .badge-gray { @apply bg-surface-2 text-ink-4; }
+  .badge-purple { @apply bg-surface-2 text-ink-3; }
 }
 
-.fade-up { animation: fadeUp 0.2s ease-out; }
-.pulse-dot { animation: glowPulse 2s ease-in-out infinite; }
-@keyframes gaugeReveal { from { stroke-dashoffset: 251; } }
+.fade-up { animation: fadeUp 0.15s ease-out; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+.pulse-dot { animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
