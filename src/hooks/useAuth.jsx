@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, useContext } from 'react'
 import { supabase } from '../lib/supabase'
 import { setUserId } from '../lib/db'
 
-const AuthContext = createContext({ user: null, loading: false })
+const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -15,27 +15,22 @@ export function AuthProvider({ children }) {
       return
     }
 
-    try {
-      supabase.auth.getSession().then(({ data }) => {
-        const u = data?.session?.user || null
-        setUser(u)
-        setUserId(u?.id || null)
-        setLoading(false)
-      }).catch(() => {
-        setLoading(false)
-      })
-
-      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-        const u = session?.user || null
-        setUser(u)
-        setUserId(u?.id || null)
-      })
-
-      return () => data?.subscription?.unsubscribe()
-    } catch (e) {
-      console.error('Auth error:', e)
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const u = session?.user || null
+      setUser(u)
+      setUserId(u?.id || null)
       setLoading(false)
-    }
+    })
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const u = session?.user || null
+      setUser(u)
+      setUserId(u?.id || null)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
   return (
@@ -46,5 +41,5 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext) || { user: null, loading: false }
+  return useContext(AuthContext)
 }
